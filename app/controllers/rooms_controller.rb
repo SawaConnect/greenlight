@@ -25,7 +25,7 @@ class RoomsController < ApplicationController
   before_action :validate_accepted_terms, unless: -> { !Rails.configuration.terms }
   before_action :validate_verified_email, except: [:show, :join],
                 unless: -> { !Rails.configuration.enable_email_verification }
-  before_action :find_room, except: [:create, :join_specific_room, :cant_create_rooms]
+  before_action :find_room, except: [:create, :join_specific_room, :cant_create_rooms, :analytics]
   before_action :verify_room_ownership_or_admin_or_shared, only: [:start, :shared_access]
   before_action :verify_room_ownership_or_admin, only: [:update_settings, :destroy, :preupload_presentation, :remove_presentation]
   before_action :verify_room_ownership_or_shared, only: [:remove_shared_access]
@@ -325,6 +325,11 @@ class RoomsController < ApplicationController
     flash[:alert] = I18n.t("room.access_code_required") if session[:access_code] != @room.access_code
 
     redirect_to room_path(@room.uid)
+  end
+
+  def analytics
+    @meetings = current_user.rooms.map{ |room| room.meetings}.flatten
+    @meetings.sort!{|a,b| b.created_at <=> a.created_at}
   end
 
   private

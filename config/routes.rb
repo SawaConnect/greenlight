@@ -106,6 +106,7 @@ Rails.application.routes.draw do
   match '/auth/:provider/callback', to: 'sessions#omniauth', via: [:get, :post], as: :omniauth_session
   get '/auth/failure', to: 'sessions#omniauth_fail'
   post '/auth/ldap', to: 'sessions#ldap', as: :ldap_callback
+  get '/analytics', to: 'rooms#analytics', as: :analytic
 
   # Users who can't create rooms
   get '/rooms', to: 'rooms#cant_create_rooms', as: :cant_create_rooms
@@ -140,6 +141,12 @@ Rails.application.routes.draw do
       post '/', to: 'recordings#update', as: :update_recording
       patch '/', to: 'recordings#rename', as: :rename_recording
       delete '/', to: 'recordings#delete', as: :delete_recording
+    end
+  end
+
+  resources :reports, only: [:show], path: 'meeting/report' do
+    member do
+      get 'attendee'
     end
   end
 

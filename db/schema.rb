@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_15_190507) do
+ActiveRecord::Schema.define(version: 2020_10_21_091849) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -33,6 +33,28 @@ ActiveRecord::Schema.define(version: 2020_06_15_190507) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "attendees", force: :cascade do |t|
+    t.text "meeting_id"
+    t.text "meeting_name"
+    t.text "internal_id"
+    t.text "attendee_id"
+    t.text "name"
+    t.boolean "moderator"
+    t.text "duration"
+    t.datetime "joined"
+    t.datetime "left"
+    t.datetime "joins"
+    t.datetime "leaves"
+    t.integer "chats"
+    t.integer "talks"
+    t.integer "raisehand"
+    t.integer "emojis"
+    t.integer "poll_votes"
+    t.integer "talk_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "features", force: :cascade do |t|
     t.integer "setting_id"
     t.string "name", null: false
@@ -52,6 +74,38 @@ ActiveRecord::Schema.define(version: 2020_06_15_190507) do
     t.datetime "updated_at", null: false
     t.index ["invite_token"], name: "index_invitations_on_invite_token"
     t.index ["provider"], name: "index_invitations_on_provider"
+  end
+
+  create_table "meetings", force: :cascade do |t|
+    t.integer "room_id"
+    t.text "meeting_id"
+    t.text "meeting_name"
+    t.text "internal_id"
+    t.datetime "start"
+    t.datetime "finish"
+    t.text "duration"
+    t.integer "attendees"
+    t.integer "moderators"
+    t.integer "viewers"
+    t.integer "polls"
+    t.integer "published_polls"
+    t.integer "unpublished_polls"
+    t.integer "files"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_meetings_on_room_id"
+  end
+
+  create_table "polls", force: :cascade do |t|
+    t.text "meeting_id"
+    t.text "meeting_name"
+    t.text "internal_id"
+    t.boolean "published"
+    t.datetime "start"
+    t.text "options"
+    t.text "votes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "role_permissions", force: :cascade do |t|

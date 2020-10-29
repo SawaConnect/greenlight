@@ -1,0 +1,231 @@
+<div class="content">
+  <div class= "container pt-6">
+    <%= render "shared/components/subtitle", subtitle: "#{@meeting.meeting_name}", search: false %>
+    <div class = "attendee-data">
+      <div class="row row-deck row-cards">
+      <div class="col-sm-6 col-lg-4">
+        <div class="card overview-card">
+          <div class="card-header">
+            <h4 class="card-title">Overview</h4>
+          </div>
+          <div class="card-body">
+            <div class='row'>
+              <div class="col">
+                Duration:
+              </div>
+              <div class="col duration">
+                <%= display_duration(@meeting.duration) %>
+              </div>
+            </div>
+            <div class='row'>
+              <div class="col">
+                Moderators:
+              </div>
+              <div class="col moderators ">
+                <%= @meeting.moderators %>
+              </div>
+            </div>
+            <div class='row'>
+              <div class="col">
+                Viewers:
+              </div>
+              <div class="col viewers">
+                <%= @meeting.viewers %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="card attention-card">
+          <div class="card-header">
+            <h4 class="card-title">Attention</h4>
+          </div>
+          <div class="card-body">
+            <div class="d-flex mb-2">
+              <div># of Students Speaking</div>
+              <% speaking = (@attendees.where.not(talks: 0,moderator: true).count.to_f / @attendees.where.not(moderator: true).count.to_f) * 100 %>
+              <div class="ml-auto speaking-score">
+                <%= speaking.nan? ? 0 : speaking.round(2).to_s.gsub('.00', '').gsub('.0', '') %>%
+              </div>
+            </div>
+            <div class="progress progress-sm">
+              <div class="progress-bar bg-blue speaking-progress" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width: <%= speaking %>%;">
+              </div>
+            </div>
+            <div class="d-flex mb-2">
+              <div># of Students Messaging</div>
+              <% messaging = (@attendees.where.not(chats: 0,moderator: true).count.to_f / @attendees.where.not(moderator: true).count.to_f) * 100 %>
+              <div class="ml-auto messaging-score">
+                <%= messaging.nan? ? 0 : messaging.round(2).to_s.gsub('.00', '').gsub('.0', '') %>%
+              </div>
+            </div>
+            <div class="progress progress-sm">
+              <div class="progress-bar bg-blue messaging-progress" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width: <%= messaging %>%;">
+              </div>
+            </div>
+            <div class="d-flex mb-2">
+              <div># of Students Using Emojis</div>
+              <% emoji = (@attendees.where.not(emojis: 0,moderator: true).count.to_f / @attendees.where.not(moderator: true).count.to_f) * 100 %>
+              <div class="ml-auto emoji-score">
+                <%= emoji.nan? ? 0 : emoji.round(2).to_s.gsub('.00', '').gsub('.0', '') %>%
+              </div>
+            </div>
+            <div class="progress progress-sm">
+              <div class="progress-bar bg-blue emoji-progress" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width: <%= emoji %>%;">
+              </div>
+            </div>
+            <div class="d-flex mb-2">
+              <div># of Students Raising Hands</div>
+              <% raisehand = (@attendees.where.not(raisehand: 0,moderator: true).count.to_f / @attendees.where.not(moderator: true).count.to_f) * 100 %>
+              <div class="ml-auto raising-score">
+                <%= raisehand.nan? ? 0 : raisehand.round(2).to_s.gsub('.00', '').gsub('.0', '') %>%
+              </div>
+            </div>
+            <div class="progress progress-sm">
+              <div class="progress-bar bg-blue raising-progress" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width: <%= raisehand %>%;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="card poll-card">
+          <div class="card-header">
+            <h4 class="card-title">Polling</h4>
+          </div>
+          <div class="card-body poll-card-body">
+            <% if @polls.present? %>
+              <% @polls.each_with_index do |poll, index| %>
+                <div class='row'>
+                  <div class='col'>
+                    Poll <%= index+1 %>
+                  </div>
+                  <div class ='col'>
+                    <%= poll.votes %>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              No Poll Data
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-deck row-cards overview">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Overview</h4>
+          </div>
+          <div class="table-responsive">
+            <table id="recordings-table" class="table table-hover table-outline table-vcenter text-nowrap card-table">
+              <thead>
+                <tr>
+                  <th>Participant</th>
+                  <th>Duration</th>
+                  <th>Time Joined</th>
+                  <th>Time Left</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if @attendees.present? %>
+                  <% @attendees.each do |attendee| %>
+                    <tr>
+                      <th><%= attendee.name %></th>
+                      <th><%= display_duration(attendee.duration) %></th>
+                      <th><%= local_time(attendee.joined, "%Hh %Mm %Ss") %></th>
+                      <th><%= local_time(attendee.left, "%Hh %Mm %Ss") %></th>
+                    </tr>
+                  <% end %>
+                <% else %>
+                  <tr><td> No Attendees</td> </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-deck row-cards attendees">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Attention</h4>
+          </div>
+          <div class="table-responsive">
+            <table id="recordings-table" class="table table-hover table-outline table-vcenter text-nowrap card-table">
+              <thead>
+                <tr>
+                  <th>Participant</th>
+                  <th>Talk Time</th>
+                  <th>Messages</th>
+                  <th>Emojis</th>
+                  <th>Hand Raises</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if @attendees.present? %>
+                  <% @attendees.each do |attendee| %>
+                    <tr>
+                      <th><%= attendee.name %></th>
+                      <th><%= display_duration(attendee.talk_time) %></th>
+                      <th><%= attendee.chats %></th>
+                      <th><%= attendee.emojis %></th>
+                      <th><%= attendee.raisehand %></th>
+                    </tr>
+                  <% end %>
+                <% else %>
+                  <tr><td>No Attendees</td> </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-deck row-cards polls">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Polling</h4>
+            </div>
+            <div class="table-responsive">
+              <table id="recordings-table" class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                <thead>
+                  <tr>
+                    <th>Meeting Id</th>
+                    <th>Metting Name</th>
+                    <th>Internal Id</th>
+                    <th>Published?</th>
+                    <th>Start</th>
+                    <th>Options</th>
+                    <th>Votes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if @polls.present? %>
+                    <% @polls.each do |poll| %>
+                      <tr>
+                        <th><%= poll.meeting_id %></th>
+                        <th><%= poll.meeting_name %></th>
+                        <th><%= poll.internal_id %></th>
+                        <th><%= poll.published %></th>
+                        <th><%= display_duration(poll.start) %></th>
+                        <th><%= poll.options %></th>
+                        <th><%= poll.votes %></th>
+                      </tr>
+                    <% end %>
+                  <% else %>
+                    <tr><td>No Polls</td> </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

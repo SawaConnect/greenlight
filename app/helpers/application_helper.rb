@@ -130,4 +130,16 @@ module ApplicationHelper
     return false unless recording_consent_required?
     @settings.get_value("Room Configuration Recording") == "disabled"
   end
+
+  def display_duration(duration)
+    duration = duration.to_i
+    hours = duration / 3600
+    minutes = (duration % 3600) / 60
+    seconds = duration % 3600 % 60
+    string = ''
+    string += '%0.2d' % hours.to_s + "h " if hours > 0
+    string += '%0.2d' % minutes.to_s + "m " if minutes > 0
+    string += '%0.2d' %  seconds.to_s + "s"
+    string
+  end
 end

@@ -88,6 +88,8 @@ GEM
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.2.1)
       aws-eventstream (~> 1, >= 1.0.2)
+    bbbevents (1.2.0)
+      activesupport (~> 5.0, >= 5.0.0.1)
     bcrypt (3.1.13)
     bindex (0.8.1)
     bn-ldap-authentication (0.1.4)
@@ -195,6 +197,7 @@ GEM
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+    local_time (2.1.0)
     lograge (0.11.2)
       actionpack (>= 4)
       activesupport (>= 4)
@@ -413,6 +416,7 @@ PLATFORMS
 DEPENDENCIES
   action-cable-testing
   aws-sdk-s3 (~> 1.75)
+  bbbevents
   bcrypt (~> 3.1.7)
   bigbluebutton-api-ruby!
   bn-ldap-authentication (~> 0.1.4)
@@ -434,6 +438,7 @@ DEPENDENCIES
   jquery-rails (~> 4.4)
   jquery-ui-rails
   listen (~> 3.0.5)
+  local_time
   lograge
   net-ldap
   omniauth
