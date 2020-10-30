@@ -30,17 +30,17 @@
                       </td>
                       <td align="center">
                         <h5>
-                          <%= meeting.start %>
+                          <%= meeting.start.in_time_zone('Asia/Dubai') %>
                         </h5>
                       </td>
                       <td align="center">
                         <h5>
-                          <%= meeting.finish %>
+                          <%= meeting.finish.in_time_zone('Asia/Dubai') %>
                         </h5>
                       </td>
                       <td align="center">
                         <h5>
-                          <%= meeting.duration %>
+                          <%= display_duration(meeting.duration) %>
                         </h5>
                       </td>
                       <td align="center">

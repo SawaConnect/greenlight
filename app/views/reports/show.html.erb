@@ -127,16 +127,23 @@
                   <th>Duration</th>
                   <th>Time Joined</th>
                   <th>Time Left</th>
+                  <th>Activity Score</th>
                 </tr>
               </thead>
               <tbody>
                 <% if @attendees.present? %>
                   <% @attendees.each do |attendee| %>
                     <tr>
-                      <th><%= attendee.name %></th>
+                      <th>
+                        <a class="btn btn-sm btn-circle btn-primary" href="#" style="margin-right: 3px;" data-toggle="modal" data-toggle="modal" data-target= "#tooltipmodals" data-item-url= <%=attendee_report_path(attendee.id, meeting_id: @meeting.id) %> >
+                          <%= attendee.name.first %>
+                        </a>
+                        <%= attendee.name %>
+                      </th>
                       <th><%= display_duration(attendee.duration) %></th>
                       <th><%= local_time(attendee.joined, "%Hh %Mm %Ss") %></th>
                       <th><%= local_time(attendee.left, "%Hh %Mm %Ss") %></th>
+                      <th><%= attendee.activity_score.round(1) %></th>
                     </tr>
                   <% end %>
                 <% else %>
@@ -226,6 +233,12 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<div id="tooltipmodals" class="modal" tabindex="-1" role="dialog" aria-labelledby="tooltipmodel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
     </div>
   </div>
 </div>

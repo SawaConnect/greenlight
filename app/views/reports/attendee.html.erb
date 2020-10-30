@@ -1,212 +1,118 @@
-<%
-# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
-# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
-# This program is free software; you can redistribute it and/or modify it under the
-# terms of the GNU Lesser General Public License as published by the Free Software
-# Foundation; either version 3.0 of the License, or (at your option) any later
-# version.
-#
-# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
-# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-# PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
-# You should have received a copy of the GNU Lesser General Public License along
-# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
-%>
-
-<div class="row page-titles">
-  <div class="col-md-5 align-self-center">
-      <h2><%= @meeting.room.name %></h2>
-      <h5><%= @meeting.start %></h5>
-  </div>
-</div>
-<div class="row">
-	<div class="col-lg-4">
-    <div class="card">
-      <div class="card-body p-b-0">
-        <h5 class="card-title">OVERVIEW</h5>
+<div class="modal-header">
+  <div class="row">
+    <div class="col" style="margin-left: 180px;margin-bottom: 30px;margin-top: 30px;text-align: center;">
+      <div class="avatar-circle" style="width: 100px; height: 100px; background-color: #ea410e;border-color: #ea410e; text-align: center; border-radius: 50%;">
+        <span style="position: relative; top: 25px; font-size: 50px;line-height: 50px;color: #fff;"><%= @attendee.name.first %>
       </div>
-      <div class="card-body bg-light">
-        <div class="d-flex no-block align-items-center">
-          <span>
-            <h2 class="">Duration</h2>
-            <small>
-              <%= @meeting.start %>
-            </small>
-          </span>
-          <div class="ml-auto">
-            <canvas class="sleet" width="44" height="44"></canvas>
-            <span class="display-6">
-              <%= display_duration(@meeting.duration) %>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-6" style="text-align: center">
-            <table class="table no-border">
-              <tbody>
-                <tr>
-                <td>
-                  <div class="font-medium">
-                    <h2 style="font-size: 4rem;margin-bottom: -5px;"><%= @meeting.moderators %></h2>
-                  </div>
-                  <span class="badge badge-pill badge-primary text-white">moderators</span>
-                </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="col-md-6" style="text-align: center">
-            <table class="table no-border">
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="font-medium">
-                      <h2 style="font-size: 4rem;margin-bottom: -5px;"><%= @meeting.viewers %></h2>
-                    </div>
-                    <span class="badge badge-pill badge-warning text-white">Students</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <h3 style="margin-top: 10px; color: black;">
+        <%= @attendee.name %>
+      </h3>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="card" style="height: 336px;">
-      <div class="card-body p-b-0">
-        <h5 class="card-title">ATTENTION</h5>
-        <h6 class="m-t-30">Number of Students Speaking
-          <span class="float-right">
-            <% speaking = (@attendees.where.not(talks: 0).count.to_f / @attendees.count.to_f) * 100 %>
-            <%= speaking.to_s.gsub('.00', '').gsub('.0', '') %>%
-          </span>
-        </h6>
-        <div class="progress ">
-            <div class="progress-bar bg-danger wow animated progress-animated" style="width: <%= speaking %>%; height:6px;" role="progressbar"> <span class="sr-only">60% Complete</span> </div>
-        </div>
-        <h6 class="m-t-30">Number of Students Messaging
-          <span class="float-right">
-            <% messaging = (@attendees.where.not(chats: 0).count.to_f / @attendees.count.to_f) * 100 %>
-            <%= messaging.to_s.gsub('.00', '').gsub('.0', '') %>%
-          </span>
-        </h6>
-        <div class="progress">
-            <div class="progress-bar bg-primary wow animated progress-animated" style="width: <%= messaging %>%; height:6px;" role="progressbar"> <span class="sr-only">60% Complete</span> </div>
-        </div>
-        <h6 class="m-t-30">Number of Students Using Emojis
-          <span class="float-right">
-            <% emoji = (@attendees.where.not(emojis: 0).count.to_f / @attendees.count.to_f) * 100 %>
-            <%= emoji.to_s.gsub('.00', '').gsub('.0', '') %>%
-          </span>
-        </h6>
-        <div class="progress">
-            <div class="progress-bar bg-cyan wow animated progress-animated" style="width: <%= emoji %>%; height:6px;" role="progressbar"> <span class="sr-only">60% Complete</span> </div>
-        </div>
-        <h6 class="m-t-30">Number of Students Raising Hands
-          <span class="float-right">
-            <% raisehand = (@attendees.where.not(raisehand: 0).count.to_f / @attendees.count.to_f) * 100 %>
-            <%= raisehand.to_s.gsub('.00', '').gsub('.0', '') %>%
-          </span>
-        </h6>
-        <div class="progress">
-            <div class="progress-bar bg-warning wow animated progress-animated" style="width: <%= raisehand %>%; height:6px;" role="progressbar"> <span class="sr-only">60% Complete</span> </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card" style="height: 336px;">
-      <div class="card-body p-b-0">
-        <h5 class="card-title">POLLING</h5>
-        <p class="text-warning">Polls<span class="float-right">Responses</span></p>
-        <div class="row">
-          <div class="col-lg-12 ps-container ps-theme-default ps-active-y ps-in-scrolling ps-y poll_scroll" id="slimtest2" style="height: 240px;">
-            <div class="row">
-              <div class="col-lg-12">
-                <% if @polls.present? %>
-                  <% @polls.each_with_index do |poll, index| %>
-                    <h6 class="m-t-30">
-                      Poll <%= index+1 %>
-                      <span class="float-right">
-                        <span class="badge badge-pill <%= ["badge-primary", "badge-cyan", "badge-info", "badge-danger", "badge-warning text-white"].sample %>">
-                          <%= poll.votes %>
-                        </span>
-                      </span>
-                    </h6>
-                  <% end %>
-                <% else %>
-                  No Poll Data
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">DETAILS</h4>
-        <h6 class="card-subtitle">March  2017</h6>
-        <div class="table-responsive">
-          <table class="table stylish-table">
-            <thead>
-              <tr>
-                <th>Participant</th>
-                <th style="text-align: center;">Duration</th>
-                <th style="text-align: center;">Time Joined</th>
-                <th style="text-align: center;">Time Left</th>
-                <th style="text-align: center;">Engagement Score</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% if @attendees.present? %>
-                <% @attendees.each do |attendee| %>
-                  <tr>
-                    <td>
-                      <%= image_tag('users/2.jpg', class: "rounded-circle", width: "40", alt: 'user', 'data-toggle':"modal", 'data-target': "#tooltipmodals", 'data-item-url': attendee_report_path(attendee.id, meeting_id: @meeting.id)) %>
-                      <%= attendee.name %>
-                      <% if attendee.moderator == true %>
-                        <span class="badge badge-pill badge-primary text-white" style="margin-left: 20px;">Moderator</span>
-                      <% else %>
-                        <span class="badge badge-pill badge-warning text-white" style="margin-left: 20px;">Student</span>
-                      <% end %>
-                    </td>
-                    <td style="text-align: center;">
-                      <span class="text-muted">
-                        <h5><%= display_duration(attendee.duration) %></h5>
-                      </span>
-                    </td>
-                    <td style="text-align: center;">
-                      <h5><%= attendee.joined %></h5>
-                    </td>
-                    <td style="text-align: center;">
-                      <h5><%= attendee.left %></h5>
-                    </td>
-                    <td style="text-align: center;">
-                        <span class="badge badge-pill badge-primary" style="font-size: 100%;">m</span></td>
-                  </tr>
-                <% end %>
-              <% else %>
-                <tr> No Attendees </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-    	</div>
+  <div class="row">
+    <div class="col">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     </div>
   </div>
 </div>
-<div id="tooltipmodals" class="modal" tabindex="-1" role="dialog" aria-labelledby="tooltipmodel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+<div class="modal-body">
+  <div class="row">
+    <div class="col" style="margin-right: -200px;">
+      <h5>Engagement Score</h5>
+    </div>
+    <div class="col">
+      <span class="badge badge-pill badge-warning text-white" style="font-size: 80%;"><%= calculation_for_attendee(@attendee, @attendees)['enagemanet_score'].round(1) %></span>
     </div>
   </div>
+  <table class="table stylish-table">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th style="text-align: center;">Participation</th>
+        <th style="text-align: center;">Activity Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <h6>Talk Time</h6>
+        </td>
+        <td style="text-align: center;">
+          <div class="progress" style="background-color: #e8eaec;">
+            <% talk_time = ((@attendee.talk_time.to_f / 60) / (@attendees.sum(:talk_time).to_f / 60)) * 100 %>
+            <div class="progress-bar bg-success" style="width: <%= talk_time.nan? ? 0 : talk_time.to_f %>%; height:15px;" role="progressbar"><%= (@attendee.talk_time.to_f % 3600 / 60).round(1) %> min</div>
+          </div>
+
+          <code style="font-size: 70%;">Average: <%= calculation_for_attendee(@attendee, @attendees)['average_talk_time'].nan? ? 0 : calculation_for_attendee(@attendee, @attendees)['average_talk_time'].round(1) %></code>
+
+        </td>
+        <td style="text-align: center;">
+          <h6><%= calculation_for_attendee(@attendee, @attendees)['activity_point_talk_time'].nan? ? 0 : calculation_for_attendee(@attendee, @attendees)['activity_point_talk_time'].round(1) %></h6>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h6>Messages</h6>
+        </td>
+        <td style="text-align: center;">
+          <div class="progress" style="background-color: #e8eaec;">
+            <% width_chat = (@attendee.chats.to_f / @attendees.sum(:chats).to_f) * 100 %>
+            <div class="progress-bar bg-info" style="width: <%= width_chat.nan? ? 0 : width_chat %>%; height:15px;" role="progressbar"><%= @attendee.chats %> Msgs</div>
+          </div>
+          <code style="font-size: 70%;"> Average: <%= calculation_for_attendee(@attendee, @attendees)['average_chat'].nan? ? 0 : calculation_for_attendee(@attendee, @attendees)['average_chat'].round(1) %></code>
+        </td>
+        <td style="text-align: center;">
+          <h6><%= calculation_for_attendee(@attendee, @attendees)['activity_chat'].nan? ? 0 : calculation_for_attendee(@attendee, @attendees)['activity_chat'].round(1) %></h6>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h6>Emojis</h6>
+        </td>
+        <td style="text-align: center;">
+          <div class="progress" style="background-color: #e8eaec;">
+            <% emoji_width = (@attendee.emojis / @attendees.sum(:emojis).to_f) * 100 %>
+            <div class="progress-bar bg-warning" style="width: <%= emoji_width.nan? ? 0 : emoji_width %>%; height:15px;" role="progressbar"><%= @attendee.emojis %></div>
+          </div>
+          <code style="font-size: 70%;"> Average: <%= calculation_for_attendee(@attendee, @attendees)['average_emojis'].nan? ? 0 : calculation_for_attendee(@attendee, @attendees)['average_emojis'].round(1) %></code>
+        </td>
+        <td style="text-align: center;">
+          <h6><%= calculation_for_attendee(@attendee, @attendees)['activity_emoji'].nan? ? 0 : calculation_for_attendee(@attendee, @attendees)['activity_emoji'].round(1) %></h6>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h6>Raised Hands</h6>
+        </td>
+        <td style="text-align: center;">
+          <div class="progress" style="background-color: #e8eaec;">
+            <% raisehand_width = (@attendee.raisehand / @attendees.sum(:raisehand).to_f) * 100 %>
+            <div class="progress-bar bg-primary" style="width: <%= raisehand_width.nan? ? 0 : raisehand_width %>%; height:15px;" role="progressbar"><%= @attendee.raisehand %></div>
+          </div>
+          <code style="font-size: 70%;"> Average: <%= calculation_for_attendee(@attendee, @attendees)['average_raisehand'].nan? ? 0 : calculation_for_attendee(@attendee, @attendees)['average_raisehand'].round(1) %></code>
+        </td>
+        <td style="text-align: center;">
+          <h6><%= calculation_for_attendee(@attendee, @attendees)['activity_raisehand'].nan? ? 0 : calculation_for_attendee(@attendee, @attendees)['activity_raisehand'].round(1) %></h6>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <h6>Poll Votes</h6>
+        </td>
+        <td style="text-align: center;">
+          <div class="progress" style="background-color: #e8eaec;">
+            <% poll_vote_width = (@attendee.poll_votes / @attendees.sum(:poll_votes).to_f) * 100 %>
+            <div class="progress-bar bg-cyan" style="width: <%= poll_vote_width.nan? ? 0 : poll_vote_width %>%; height:15px;" role="progressbar"><%= @attendee.poll_votes %></div>
+          </div>
+          <code style="font-size: 70%;"> Average: <%=  calculation_for_attendee(@attendee, @attendees)['average_poll_votes'].nan? ? 0 : calculation_for_attendee(@attendee, @attendees)['average_poll_votes'].round(1) %></code>
+        </td>
+        <td style="text-align: center;">
+          <h6><%= calculation_for_attendee(@attendee, @attendees)['activity_poll_votes'].nan? ? 0 : calculation_for_attendee(@attendee, @attendees)['activity_poll_votes'].round(1) %></h6>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
 </div>
