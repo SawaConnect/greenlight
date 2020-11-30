@@ -6,12 +6,12 @@
       <div class="col-sm-6 col-lg-4">
         <div class="card overview-card">
           <div class="card-header">
-            <h4 class="card-title">Overview</h4>
+            <h4 class="card-title"><%= t("report.overview") %></h4>
           </div>
           <div class="card-body">
             <div class='row'>
               <div class="col">
-                Duration:
+                <%= t("analytics.duration") %>:
               </div>
               <div class="col duration">
                 <%= display_duration(@meeting.duration) %>
@@ -19,7 +19,7 @@
             </div>
             <div class='row'>
               <div class="col">
-                Moderators:
+                <%= t("analytics.moderators") %>:
               </div>
               <div class="col moderators ">
                 <%= @meeting.moderators %>
@@ -27,7 +27,7 @@
             </div>
             <div class='row'>
               <div class="col">
-                Viewers:
+                <%= t("analytics.viewers") %>:
               </div>
               <div class="col viewers">
                 <%= @meeting.viewers %>
@@ -39,11 +39,11 @@
       <div class="col-sm-6 col-lg-4">
         <div class="card attention-card">
           <div class="card-header">
-            <h4 class="card-title">Attention</h4>
+            <h4 class="card-title"><%= t("report.attention") %></h4>
           </div>
           <div class="card-body">
             <div class="d-flex mb-2">
-              <div># of Students Speaking</div>
+              <div># <%= t("report.student_speaking") %></div>
               <% speaking = (@attendees.where.not(talks: 0,moderator: true).count.to_f / @attendees.where.not(moderator: true).count.to_f) * 100 %>
               <div class="ml-auto speaking-score">
                 <%= speaking.nan? ? 0 : speaking.round(2).to_s.gsub('.00', '').gsub('.0', '') %>%
@@ -54,7 +54,7 @@
               </div>
             </div>
             <div class="d-flex mb-2">
-              <div># of Students Messaging</div>
+              <div># <%= t("report.students_messaging") %></div>
               <% messaging = (@attendees.where.not(chats: 0,moderator: true).count.to_f / @attendees.where.not(moderator: true).count.to_f) * 100 %>
               <div class="ml-auto messaging-score">
                 <%= messaging.nan? ? 0 : messaging.round(2).to_s.gsub('.00', '').gsub('.0', '') %>%
@@ -65,7 +65,7 @@
               </div>
             </div>
             <div class="d-flex mb-2">
-              <div># of Students Using Emojis</div>
+              <div># <%= t("report.students_emojis") %></div>
               <% emoji = (@attendees.where.not(emojis: 0,moderator: true).count.to_f / @attendees.where.not(moderator: true).count.to_f) * 100 %>
               <div class="ml-auto emoji-score">
                 <%= emoji.nan? ? 0 : emoji.round(2).to_s.gsub('.00', '').gsub('.0', '') %>%
@@ -76,7 +76,7 @@
               </div>
             </div>
             <div class="d-flex mb-2">
-              <div># of Students Raising Hands</div>
+              <div># <%= t("report.students_raising") %></div>
               <% raisehand = (@attendees.where.not(raisehand: 0,moderator: true).count.to_f / @attendees.where.not(moderator: true).count.to_f) * 100 %>
               <div class="ml-auto raising-score">
                 <%= raisehand.nan? ? 0 : raisehand.round(2).to_s.gsub('.00', '').gsub('.0', '') %>%
@@ -92,14 +92,14 @@
       <div class="col-sm-6 col-lg-4">
         <div class="card poll-card">
           <div class="card-header">
-            <h4 class="card-title">Polling</h4>
+            <h4 class="card-title"><%= t("report.polling") %></h4>
           </div>
           <div class="card-body poll-card-body">
             <% if @polls.present? %>
               <% @polls.each_with_index do |poll, index| %>
                 <div class='row'>
                   <div class='col'>
-                    Poll <%= index+1 %>
+                    <%= t("report.poll") %> <%= index+1 %>
                   </div>
                   <div class ='col'>
                     <%= poll.votes %>
@@ -107,7 +107,7 @@
                 </div>
               <% end %>
             <% else %>
-              No Poll Data
+              <%= t("report.no_poll_data") %>
             <% end %>
           </div>
         </div>
@@ -117,17 +117,17 @@
       <div class="col">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Overview</h4>
+            <h4 class="card-title"><%= t("report.overview") %></h4>
           </div>
           <div class="table-responsive">
             <table id="recordings-table" class="table table-hover table-outline table-vcenter text-nowrap card-table">
               <thead>
                 <tr>
-                  <th>Participant</th>
-                  <th>Duration</th>
-                  <th>Time Joined</th>
-                  <th>Time Left</th>
-                  <th>Activity Score</th>
+                  <th><%= t("report.participant") %></th>
+                  <th><%= t("analytics.duration") %></th>
+                  <th><%= t("report.time_joined") %></th>
+                  <th><%= t("report.time_left") %></th>
+                  <th><%= t("report.activity_score") %></th>
                 </tr>
               </thead>
               <tbody>
@@ -147,7 +147,7 @@
                     </tr>
                   <% end %>
                 <% else %>
-                  <tr><td> No Attendees</td> </tr>
+                  <tr><td> <%= t("report.no_attendees") %></td> </tr>
                 <% end %>
               </tbody>
             </table>
@@ -159,17 +159,17 @@
       <div class="col">
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">Attention</h4>
+            <h4 class="card-title"><%= t("report.attention") %></h4>
           </div>
           <div class="table-responsive">
             <table id="recordings-table" class="table table-hover table-outline table-vcenter text-nowrap card-table">
               <thead>
                 <tr>
-                  <th>Participant</th>
-                  <th>Talk Time</th>
-                  <th>Messages</th>
-                  <th>Emojis</th>
-                  <th>Hand Raises</th>
+                  <th><%= t("report.participant") %></th>
+                  <th><%= t("report.talk_time") %></th>
+                  <th><%= t("report.messages") %></th>
+                  <th><%= t("report.emojis") %></th>
+                  <th><%= t("report.hand_raises") %></th>
                 </tr>
               </thead>
               <tbody>
@@ -184,7 +184,7 @@
                     </tr>
                   <% end %>
                 <% else %>
-                  <tr><td>No Attendees</td> </tr>
+                  <tr><td><%= t("report.no_attendees") %></td> </tr>
                 <% end %>
               </tbody>
             </table>
@@ -196,19 +196,19 @@
         <div class="col">
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title">Polling</h4>
+              <h4 class="card-title"><%= t("report.polling") %></h4>
             </div>
             <div class="table-responsive">
               <table id="recordings-table" class="table table-hover table-outline table-vcenter text-nowrap card-table">
                 <thead>
                   <tr>
-                    <th>Meeting Id</th>
-                    <th>Metting Name</th>
-                    <th>Internal Id</th>
-                    <th>Published?</th>
-                    <th>Start</th>
-                    <th>Options</th>
-                    <th>Votes</th>
+                    <th><%= t("report.meeting_id") %></th>
+                    <th><%= t("report.meeting_name") %></th>
+                    <th><%= t("report.internal_id") %></th>
+                    <th><%= t("report.published?") %></th>
+                    <th><%= t("analytics.start") %></th>
+                    <th><%= t("report.options") %></th>
+                    <th><%= t("report.votes") %></th>
                   </tr>
                 </thead>
                 <tbody>

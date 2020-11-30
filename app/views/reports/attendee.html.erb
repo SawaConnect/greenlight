@@ -18,7 +18,7 @@
 <div class="modal-body">
   <div class="row">
     <div class="col" style="margin-right: -200px;">
-      <h5>Engagement Score</h5>
+      <h5><%= t("report.engagement_score") %></h5>
     </div>
     <div class="col">
       <span class="badge badge-pill badge-warning text-white" style="font-size: 80%;"><%= calculation_for_attendee(@attendee, @attendees)['enagemanet_score'].round(1) %></span>
@@ -27,15 +27,15 @@
   <table class="table stylish-table">
     <thead>
       <tr>
-        <th>Category</th>
-        <th style="text-align: center;">Participation</th>
-        <th style="text-align: center;">Activity Points</th>
+        <th><%= t("report.category") %></th>
+        <th style="text-align: center;"><%= t("report.participation") %></th>
+        <th style="text-align: center;"><%= t("report.activity_points") %></th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>
-          <h6>Talk Time</h6>
+          <h6><%= t("report.talk_time") %></h6>
         </td>
         <td style="text-align: center;">
           <div class="progress" style="background-color: #e8eaec;">
@@ -52,7 +52,7 @@
       </tr>
       <tr>
         <td>
-          <h6>Messages</h6>
+          <h6><%= t("report.messages") %></h6>
         </td>
         <td style="text-align: center;">
           <div class="progress" style="background-color: #e8eaec;">
@@ -67,7 +67,7 @@
       </tr>
       <tr>
         <td>
-          <h6>Emojis</h6>
+          <h6><%= t("report.emojis") %></h6>
         </td>
         <td style="text-align: center;">
           <div class="progress" style="background-color: #e8eaec;">
@@ -82,7 +82,7 @@
       </tr>
       <tr>
         <td>
-          <h6>Raised Hands</h6>
+          <h6><%= t("report.raised_hands") %></h6>
         </td>
         <td style="text-align: center;">
           <div class="progress" style="background-color: #e8eaec;">
@@ -97,7 +97,7 @@
       </tr>
       <tr>
         <td>
-          <h6>Poll Votes</h6>
+          <h6><%= t("report.poll_votes") %></h6>
         </td>
         <td style="text-align: center;">
           <div class="progress" style="background-color: #e8eaec;">

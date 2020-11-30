@@ -90,7 +90,7 @@ en:
         title: Maintenance Banner
         display: Set
         clear: Clear
-        time: "Example: Update scheduled on December 13 @ 23:00 ET. Users may experience problems signing in."        
+        time: "Example: Update scheduled on December 13 @ 23:00 ET. Users may experience problems signing in."
       preupload:
         info: Users can preupload a presentation to be used as the default presentation for that specific room
         title: Allow Users to Preupload Presentations
@@ -541,7 +541,7 @@ en:
       fail: Failed to delete room (%{error})
     enter_the_access_code: Enter the room's access code
     invalid_provider: You have entered an invalid url. Please check the url and try again.
-    invitation_description: You have been invited to join %{name} using BigBlueButton. To join, click the link above and enter your name.  
+    invitation_description: You have been invited to join %{name} using BigBlueButton. To join, click the link above and enter your name.
     invited: You have been invited to join
     recording_present: I acknowledge that this session is going to be recorded. This may include my voice and video if enabled.
     invite_participants: Invite Participants
@@ -629,3 +629,44 @@ en:
     signin: Please sign in to access your account.
     title: Verify your email
     verification: Verification
+  analytics:
+    meeting_name: Meeting Name
+    start:  Start
+    finish:  Finish
+    duration:  Duration
+    attendees:  Attendees
+    moderators:  Moderators
+    viewers:  Viewers
+    polls:  Polls
+  report:
+    overview: Overview
+    attention: Attention
+    student_speaking: of Students Speaking
+    students_messaging: of Students Messaging
+    students_emojis: of Students Using Emojis
+    students_raising: of Students Raising Hands
+    polling: Polling
+    poll: Poll
+    no_poll_data: No Poll Data
+    participant: Participant
+    time_joined: Time Joined
+    time_left: Time Left
+    activity_score: Activity Score
+    no_attendees: No Attendees
+    talk_time: Talk Time
+    messages: Messages
+    emojis: Emojis
+    hand_raises: Hand Raises
+    meeting_id: Meeting Id
+    meeting_name: Meeting Name
+    internal_id: Internal Id
+    published?: Published?
+    options: Options
+    votes: Votes
+    engagement_score: Engagement Score
+    category: Category
+    participation: Participation
+    activity_points: Activity Points
+    raised_hands: Raised Hands
+    poll_votes: Poll Votes
+    meetings: Meetings

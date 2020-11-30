@@ -1,6 +1,6 @@
 <div class="sessions pb-5">
   <div class="container pt-6">
-    <%= render "shared/components/subtitle", subtitle: 'Meetings', search: false %>
+    <%= render "shared/components/subtitle", subtitle: t("report.meetings"), search: false %>
     <div id='room_mettings' class='row'>
       <div class="col-12">
         <div class="card">
@@ -8,14 +8,14 @@
             <table class="table stylish-table" id="meetings-table">
                 <thead>
                     <tr>
-                        <th align="left" width="15%">Metting Name</th>
-                        <th align="center" width="15%">Start</th>
-                        <th align="center" width="15%"">Finish</th>
-                        <th align="center" width="10%">Duration</th>
-                        <th align="center" width="10%">Attendees</th>
-                        <th align="center" width="10%">Moderators</th>
-                        <th align="center" width="10%">Viewers</th>
-                        <th align="center" width="10%">Polls</th>
+                        <th align="left" width="15%"><%= t("analytics.meeting_name") %></th>
+                        <th align="center" width="15%"><%= t("analytics.start") %></th>
+                        <th align="center" width="15%""><%= t("analytics.finish") %></th>
+                        <th align="center" width="10%"><%= t("analytics.duration") %></th>
+                        <th align="center" width="10%"><%= t("analytics.attendees") %></th>
+                        <th align="center" width="10%"><%= t("analytics.moderators") %></th>
+                        <th align="center" width="10%"><%= t("analytics.viewers") %></th>
+                        <th align="center" width="10%"><%= t("analytics.polls") %></th>
                         <th align="right" width="5%"></th>
                     </tr>
                 </thead>
